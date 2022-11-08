@@ -6,7 +6,9 @@
 }
 html,
 body {
-  overscroll-behavior-y: contain;
+  /* 安卓禁用下滑刷新 */
+  overscroll-behavior: contain;
+  /* 苹果 */
   overflow: hidden;
 }
 body {
