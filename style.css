@@ -4,29 +4,33 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-html,
-body {
-  /* 安卓禁用下滑刷新 */
-  /* overflow: hidden; */
+
+#score {
+  color: #ccc;
+  margin-bottom: 12px;
 }
-p {
-  display: block;
+
+body {
+  padding: 1rem;
+  /* overflow: scroll; */
+  background-color: #333;
+  /* display: flex; */
+  /* justify-content: center;
+  align-items: center; */
+  /* height: 100vh; */
+  margin: 0;
+  font-size: 7.5vmin;
 }
 #game {
   /* overscroll-behavior: contain; */
 
-  display: block;
   touch-action: none;
   /* 苹果 */
 }
-body {
-  background-color: #333;
+.game-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-size: 7.5vmin;
 }
 
 #game-board {
@@ -41,6 +45,7 @@ body {
   border-radius: 1vmin;
   padding: 2vmin;
   position: relative;
+  margin: 2vmin;
 }
 
 #lose-message {

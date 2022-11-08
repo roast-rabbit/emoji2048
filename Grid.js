@@ -1,5 +1,5 @@
 const GRID_SIZE = 4;
-const CELL_SIZE = 20;
+const CELL_SIZE = 18;
 const CELL_GAP = 2;
 
 export default class Grid {
@@ -15,7 +15,6 @@ export default class Grid {
         Math.floor(index / GRID_SIZE)
       );
     });
-    console.log(this.#cells);
   }
   get cells() {
     return this.#cells;
@@ -42,8 +41,6 @@ export default class Grid {
 
   randomEmptyCell() {
     const randomIndex = Math.floor(Math.random() * this.#emptyCells.length);
-    console.log(this.#emptyCells);
-    console.log(randomIndex);
     return this.#emptyCells[randomIndex];
   }
 }

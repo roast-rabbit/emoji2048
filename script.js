@@ -4,14 +4,24 @@ import Swipe from "./Swipe.js";
 
 const gameBoard = document.getElementById("game-board");
 let grid;
-
+let score;
 const loseMessage = document.querySelector("#lose-message");
+const loseMessageText = document.querySelector("#lose-message p");
 const overlay = document.querySelector("#overlay");
 const restart = document.querySelector("#restart");
+const scoreFigure = document.querySelector("#score span");
 
 restart.addEventListener("click", () => {
   newGame();
 });
+
+function updateScore() {
+  score = 0;
+  grid.cells.forEach((cell) => {
+    if (cell?.tile?.value) score += cell.tile.value;
+  });
+  scoreFigure.textContent = score;
+}
 
 function newGame() {
   loseMessage.style.display = "none";
@@ -27,11 +37,14 @@ function newGame() {
   grid = new Grid(gameBoard);
   grid.randomEmptyCell().tile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = new Tile(gameBoard);
-
+  updateScore();
   setupInput();
 }
 
 function setupInput() {
+  gameBoard.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+  });
   gameBoard.addEventListener("swiped-up", handleSwipeUp, { once: true });
   gameBoard.addEventListener("swiped-down", handleSwipeDown, { once: true });
   gameBoard.addEventListener("swiped-right", handleSwipeRight, { once: true });
@@ -39,8 +52,7 @@ function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
 
-async function handleSwipeUp(e) {
-  e.preventDefault();
+async function handleSwipeUp() {
   if (!canMoveUp()) {
     setupInput();
     return;
@@ -54,15 +66,15 @@ async function handleSwipeUp(e) {
     newTile.waitForTransition(true).then(() => {
       loseMessage.style.display = "block";
       overlay.style.display = "block";
+      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
     });
     return true;
   }
+  updateScore();
   setupInput();
 }
 
-async function handleSwipeDown(e) {
-  console.log(e);
-  e.preventDefault();
+async function handleSwipeDown() {
   if (!canMoveDown()) {
     setupInput();
     return;
@@ -73,11 +85,13 @@ async function handleSwipeDown(e) {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
+      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
+  updateScore();
   setupInput();
 }
 
@@ -92,11 +106,13 @@ async function handleSwipeRight() {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
+      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
+  updateScore();
   setupInput();
 }
 
@@ -111,11 +127,14 @@ async function handleSwipeLeft() {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
+      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
+  updateScore();
+
   setupInput();
 }
 
@@ -158,11 +177,14 @@ async function handleInput(e) {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
+      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
+  updateScore();
+
   setupInput();
 }
 
