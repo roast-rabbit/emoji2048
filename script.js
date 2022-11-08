@@ -39,7 +39,8 @@ function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
 
-async function handleSwipeUp() {
+async function handleSwipeUp(e) {
+  e.preventDefault();
   if (!canMoveUp()) {
     setupInput();
     return;
@@ -59,7 +60,9 @@ async function handleSwipeUp() {
   setupInput();
 }
 
-async function handleSwipeDown() {
+async function handleSwipeDown(e) {
+  console.log(e);
+  e.preventDefault();
   if (!canMoveDown()) {
     setupInput();
     return;
@@ -231,11 +234,4 @@ function canMove(cells) {
 }
 window.addEventListener("DOMContentLoaded", () => {
   newGame();
-  document.addEventListener(
-    "touchmove",
-    (e) => {
-      e.preventDefalut();
-    },
-    { passive: false }
-  );
 });
