@@ -229,5 +229,13 @@ function canMove(cells) {
     });
   });
 }
-
-newGame();
+window.addEventListener("DOMContentLoaded", () => {
+  newGame();
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      e.preventDefalut();
+    },
+    { passive: false }
+  );
+});
