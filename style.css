@@ -7,9 +7,17 @@
 html,
 body {
   /* 安卓禁用下滑刷新 */
-  overscroll-behavior: contain;
+  /* overflow: hidden; */
+}
+p {
+  display: block;
+}
+#game {
+  /* overscroll-behavior: contain; */
+
+  display: block;
+  touch-action: none;
   /* 苹果 */
-  overflow: hidden;
 }
 body {
   background-color: #333;
