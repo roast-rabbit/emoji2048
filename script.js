@@ -20,6 +20,7 @@ function updateScore() {
 }
 
 function newGame() {
+  totalScore = 0;
   loseMessage.style.display = "none";
   overlay.style.display = "none";
   let tiles = document.querySelectorAll(".tile");
@@ -63,6 +64,7 @@ async function handleSwipeUp() {
     }
   });
   totalScore += newScore;
+  updateScore();
 
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
@@ -70,11 +72,10 @@ async function handleSwipeUp() {
     newTile.waitForTransition(true).then(() => {
       loseMessage.style.display = "block";
       overlay.style.display = "block";
-      loseMessageText.textContent = `Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${totalScore}`;
     });
     return true;
   }
-  updateScore();
   setupInput();
 }
 
@@ -93,23 +94,23 @@ async function handleSwipeDown() {
     }
   });
   totalScore += newScore;
+  updateScore();
 
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${totalScore}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
-  updateScore();
   setupInput();
 }
 
 async function handleSwipeRight() {
-  if (!canMoveRight) {
+  if (!canMoveRight()) {
     setupInput();
     return;
   }
@@ -123,23 +124,23 @@ async function handleSwipeRight() {
     }
   });
   totalScore += newScore;
+  updateScore();
 
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${totalScore}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
-  updateScore();
   setupInput();
 }
 
 async function handleSwipeLeft() {
-  if (!canMoveLeft) {
+  if (!canMoveLeft()) {
     setupInput();
     return;
   }
@@ -152,17 +153,18 @@ async function handleSwipeLeft() {
     }
   });
   totalScore += newScore;
+  updateScore();
+
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${totalScore}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
-  updateScore();
 
   setupInput();
 }
@@ -210,17 +212,18 @@ async function handleInput(e) {
     }
   });
   totalScore += newScore;
+  updateScore();
+
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${totalScore}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
     return true;
   }
-  updateScore();
 
   setupInput();
 }
@@ -257,7 +260,6 @@ function slideTiles(cells) {
           promises.push(cell.tile.waitForTransition());
           if (lastValidCell.tile != null) {
             lastValidCell.mergeTile = cell.tile;
-            console.log(lastValidCell.mergeTile.value);
           } else {
             lastValidCell.tile = cell.tile;
           }
