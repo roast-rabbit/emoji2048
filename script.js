@@ -139,6 +139,7 @@ async function handleSwipeLeft() {
 }
 
 async function handleInput(e) {
+  e.preventDefault();
   switch (e.key) {
     case "ArrowUp":
       if (!canMoveUp()) {
