@@ -6,7 +6,7 @@ const gameBoard = document.getElementById("game-board");
 let grid;
 let score;
 const loseMessage = document.querySelector("#lose-message");
-const loseMessageText = document.querySelector("#lose-message p");
+const loseMessageText = document.querySelector("#lose-message p:nth-child(2)");
 const overlay = document.querySelector("#overlay");
 const restart = document.querySelector("#restart");
 const scoreFigure = document.querySelector("#score span");
@@ -66,7 +66,7 @@ async function handleSwipeUp() {
     newTile.waitForTransition(true).then(() => {
       loseMessage.style.display = "block";
       overlay.style.display = "block";
-      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${score}`;
     });
     return true;
   }
@@ -85,7 +85,7 @@ async function handleSwipeDown() {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
@@ -106,7 +106,7 @@ async function handleSwipeRight() {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
@@ -127,7 +127,7 @@ async function handleSwipeLeft() {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
@@ -178,7 +178,7 @@ async function handleInput(e) {
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      loseMessageText.textContent = `GAME OVER😜 Your Score Is ${score}`;
+      loseMessageText.textContent = `Your Score Is ${score}`;
       loseMessage.style.display = "block";
       overlay.style.display = "block";
     });
