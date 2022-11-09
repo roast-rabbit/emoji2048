@@ -56,6 +56,7 @@ class Cell {
     this.#cellElement = cellElement;
     this.#x = x;
     this.#y = y;
+    this.score = 0;
   }
 
   get x() {
@@ -94,11 +95,14 @@ class Cell {
       (this.mergeTile == null && this.tile.value == tile.value)
     );
   }
+
   mergeTiles() {
     if (this.tile == null || this.mergeTile == null) return;
     this.tile.value = this.tile.value + this.mergeTile.value;
+
     this.mergeTile.remove();
     this.mergeTile = null;
+    return this.tile.value;
   }
 }
 

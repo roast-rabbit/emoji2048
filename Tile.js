@@ -18,8 +18,9 @@ export default class Tile {
 
   set value(v) {
     this.#value = v;
-    console.log(`this.#value: ${this.#value}`);
+
     this.#tileElement.textContent = MapNumberToEmoji[this.#value];
+    // this.#tileElement.textContent = this.#value;
     const power = Math.log2(v);
     const backgroundLightness = 100 - power * 9;
     this.#tileElement.style.setProperty(

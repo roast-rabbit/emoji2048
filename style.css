@@ -5,6 +5,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
 }
+
 div {
   font-size: 2rem;
 }
@@ -96,6 +97,9 @@ body {
 }
 
 .tile {
+  font-family: apple color emoji, segoe ui emoji, noto color emoji,
+    android emoji, emojisymbols, emojione mozilla, twemoji mozilla,
+    segoe ui symbol;
   --x: 1;
   --y: 1;
   --background-lightness: 20%;

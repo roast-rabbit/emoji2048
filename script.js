@@ -4,7 +4,7 @@ import Swipe from "./Swipe.js";
 
 const gameBoard = document.getElementById("game-board");
 let grid;
-let score;
+let totalScore;
 const loseMessage = document.querySelector("#lose-message");
 const loseMessageText = document.querySelector("#lose-message p:nth-child(2)");
 const overlay = document.querySelector("#overlay");
@@ -16,11 +16,7 @@ restart.addEventListener("click", () => {
 });
 
 function updateScore() {
-  score = 0;
-  grid.cells.forEach((cell) => {
-    if (cell?.tile?.value) score += cell.tile.value;
-  });
-  scoreFigure.textContent = score;
+  scoreFigure.textContent = totalScore;
 }
 
 function newGame() {
@@ -58,7 +54,15 @@ async function handleSwipeUp() {
     return;
   }
   await moveUp();
-  grid.cells.forEach((cell) => cell.mergeTiles());
+
+  let newScore = 0;
+  grid.cells.forEach((cell) => {
+    const value = cell.mergeTiles(newScore);
+    if (value) {
+      newScore += value;
+    }
+  });
+  totalScore += newScore;
 
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
@@ -80,7 +84,16 @@ async function handleSwipeDown() {
     return;
   }
   await moveDown();
-  grid.cells.forEach((cell) => cell.mergeTiles());
+
+  let newScore = 0;
+  grid.cells.forEach((cell) => {
+    const value = cell.mergeTiles(newScore);
+    if (value) {
+      newScore += value;
+    }
+  });
+  totalScore += newScore;
+
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
@@ -101,7 +114,16 @@ async function handleSwipeRight() {
     return;
   }
   await moveRight();
-  grid.cells.forEach((cell) => cell.mergeTiles());
+
+  let newScore = 0;
+  grid.cells.forEach((cell) => {
+    const value = cell.mergeTiles(newScore);
+    if (value) {
+      newScore += value;
+    }
+  });
+  totalScore += newScore;
+
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
@@ -122,7 +144,14 @@ async function handleSwipeLeft() {
     return;
   }
   await moveLeft();
-  grid.cells.forEach((cell) => cell.mergeTiles());
+  let newScore = 0;
+  grid.cells.forEach((cell) => {
+    const value = cell.mergeTiles(newScore);
+    if (value) {
+      newScore += value;
+    }
+  });
+  totalScore += newScore;
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
@@ -173,7 +202,14 @@ async function handleInput(e) {
       setupInput();
       return;
   }
-  grid.cells.forEach((cell) => cell.mergeTiles());
+  let newScore = 0;
+  grid.cells.forEach((cell) => {
+    const value = cell.mergeTiles(newScore);
+    if (value) {
+      newScore += value;
+    }
+  });
+  totalScore += newScore;
   const newTile = new Tile(gameBoard);
   grid.randomEmptyCell().tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
@@ -221,6 +257,7 @@ function slideTiles(cells) {
           promises.push(cell.tile.waitForTransition());
           if (lastValidCell.tile != null) {
             lastValidCell.mergeTile = cell.tile;
+            console.log(lastValidCell.mergeTile.value);
           } else {
             lastValidCell.tile = cell.tile;
           }
@@ -257,4 +294,6 @@ function canMove(cells) {
 }
 window.addEventListener("DOMContentLoaded", () => {
   newGame();
+  totalScore = 0;
+  updateScore(0);
 });
